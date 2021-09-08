@@ -8,7 +8,7 @@ from drf_yasg import openapi
 schema_view = get_schema_view(
    openapi.Info(
       title="Quiz documentation",
-      default_version='V1',
+      default_version='v2',
       description="Quiz API documentation",
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="kubat.usubaliev@gmail.com"),
