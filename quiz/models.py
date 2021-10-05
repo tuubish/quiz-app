@@ -22,7 +22,7 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     label = models.CharField(max_length=100, verbose_name=_('Question text'))
     order = models.IntegerField(default=0, verbose_name=_('Order'))
 
