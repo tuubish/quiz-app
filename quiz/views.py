@@ -1,30 +1,25 @@
-from quiz.serializer import QuizSerializer, QuestionSerializer, AnswerSerializer, QuizTakerSerializer, \
-    UserAnswerSerializer
+from django.shortcuts import render
+from django.views.generic import TemplateView
+
 from quiz.models import Quiz, Question, Answer, QuizTaker, UserAnswer
-from rest_framework import viewsets
-from rest_framework.response import Response
 
 
-class QuizListAPIView(viewsets.ModelViewSet):
-    queryset = Quiz.objects.all()
-    serializer_class = QuizSerializer
+class HomeView(TemplateView):
+
+    def dispatch(self, request, *args, **kwargs):
+        quizzes = Quiz.objects.all()
+        return render(request, template_name='quiz/main.html', context={
+            'quizzes': quizzes
+        })
 
 
-class QuestionListAPIView(viewsets.ModelViewSet):
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
+class QuizView(TemplateView):
+    template_name = "quiz/quiz.html"
 
+    def get_context_data(self, **kwargs):
+        quiz_id = kwargs["quiz_id"]
+        quiz = Quiz.objects.get(id=quiz_id)
 
-class AnswerAPIView(viewsets.ModelViewSet):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerSerializer
-
-
-class QuizTakerAPIView(viewsets.ModelViewSet):
-    queryset = QuizTaker.objects.all()
-    serializer_class = QuizTakerSerializer
-
-
-class UserAnswerAPIView(viewsets.ModelViewSet):
-    queryset = UserAnswer.objects.all()
-    serializer_class = UserAnswerSerializer
+        return {
+            'quiz': quiz
+        }
